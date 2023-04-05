@@ -1,0 +1,13 @@
+{
+  "name": "@pixnbits/isolated-vm-scratchpad",
+  "version": "1.0.0",
+  "description": "Scratchpad of experiments with isolated-vm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "isolated-vm": "^4.5.0"
+  }
+}
