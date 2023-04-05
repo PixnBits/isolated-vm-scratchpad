@@ -1,3 +1,4 @@
+'use strict';
 const ivm = require('isolated-vm');
 
 (async function main() {
@@ -5,11 +6,14 @@ const ivm = require('isolated-vm');
   try {
     isolate = new ivm.Isolate();
 
-    scripts = [
-      { code: 'var thing = 101134;', filename: 'file:///thing.js' },
-      { code: 'function render() { log("rendered!"); }', filename: 'file:///render.js' },
-      { code: 'const deep = { a: 1, b: 2 };', filename: 'file:///deep.js' },
-    ].map(({ code, ...fileInfo }) => isolate.compileScriptSync(code, fileInfo));
+    const scripts = await Promise.all(
+      [
+        { code: 'var thing = 101134;', filename: 'file:///thing.js' },
+        { code: 'function render() { log("rendered!"); }', filename: 'file:///render.js' },
+        { code: 'const deep = { a: 1, b: 2 };', filename: 'file:///deep.js' },
+      ]
+        .map(({ code, ...fileInfo }) => isolate.compileScript(code, fileInfo))
+    );
 
     const contextA = await isolate.createContext();
     const jailA = contextA.global;
